@@ -1,15 +1,33 @@
 $size: 24px;
-$width: 2px;
+$width: 3px;
+
+
+
+.task,
+.checkbox,
+.remove,
+.remove:after,
+.remove:before {
+  transition: all 100ms ease-in-out;
+}
 
 .task {
+  --high-color: #eee;
+  --high-color-3: #{rgba(#eee, 0.3)};
+
   display: flex;
   flex-flow: row nowrap;
   gap: 16px;
   justify-content: space-between;
   align-items: stretch;
-  border: solid 1px #eee;
+  border: solid 2px;
+  border-color: var(--high-color-3);
   border-radius: 8px;
   padding: .5rem;
+
+  &:hover {
+    border-color: var(--high-color);
+  }
 }
 
 .control {
@@ -28,10 +46,34 @@ $width: 2px;
 }
 
 .checkbox {
-  background-color: red;
+  border: solid 3px;
+  border-color: var(--high-color-3);
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
 
-  &.marked {
-    background-color: green;
+  &:hover {
+    border-color: var(--high-color);
+  }
+
+  &::after {
+    position: absolute;
+    content: '';
+    display: block;
+    width: calc(0.5 * ($size / 2));
+    height: calc(0.5 * $size);
+    rotate: 40deg;
+    translate: calc($size / 5);
+    border-color: var(--high-color);
+    border-style: solid;
+    border-width: 0 4px 4px 0;
+    opacity: 0;
+    transition: inherit;
+  }
+
+  &.marked::after {
+    opacity: 1;
+    border-color: #3d3;
   }
 }
 
@@ -41,16 +83,22 @@ $width: 2px;
 
   &:hover {
     opacity: 1;
+
+    &:before,
+    &:after {
+      background-color: red;
+    }
   }
 
   &:before,
   &:after {
+    display: block;
     position: absolute;
     left: calc(($size - $width) / 2);
     content: ' ';
     height: $size;
     width: $width;
-    background-color: #eee;
+    background-color: var(--high-color);
   }
 
   &:before {
@@ -64,14 +112,7 @@ $width: 2px;
 
 @media (prefers-color-scheme: light) {
   .task {
-    border-color: #555;
-  }
-
-  .remove {
-
-    &:before,
-    &:after {
-      background-color: #555;
-    }
+    --high-color: #222;
+    --high-color-3: #{rgba(#222, .3)};
   }
 }

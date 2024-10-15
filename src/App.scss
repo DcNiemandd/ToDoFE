@@ -1,0 +1,17 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.tasks {
+  display: flex;
+  flex-flow: column;
+  gap: 8px;
+  align-items: stretch;
+}
+
+h1,
+.tasks {
+  margin-block: 3rem;
+}

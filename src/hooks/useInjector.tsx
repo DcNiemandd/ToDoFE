@@ -1,10 +1,11 @@
 // @deno-types="@types/react"
 import { createContext, FC, PropsWithChildren, useContext } from "react";
 import { useApi } from "./useApi.ts";
+import { useTasksState } from "./useTasksState.ts";
 
 const InjectorContext = createContext<
   {
-    api: ReturnType<typeof useApi>;
+    state: ReturnType<typeof useTasksState>;
   }
 > // deno-lint-ignore no-explicit-any
 ({} as any);
@@ -12,10 +13,9 @@ const InjectorContext = createContext<
 export const InjectorProvider: FC<PropsWithChildren> = (
   { children },
 ) => {
-  const api = useApi("api");
-
+  const state = useTasksState();
   const value = {
-    api,
+    state,
   };
 
   return (

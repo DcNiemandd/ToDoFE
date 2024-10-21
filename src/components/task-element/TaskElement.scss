@@ -1,4 +1,4 @@
-$size: 24px;
+$size: 24px !default;
 $width: 3px;
 
 
@@ -7,14 +7,12 @@ $width: 3px;
 .checkbox,
 .remove,
 .remove:after,
-.remove:before {
+.remove:before,
+.edit:after {
   transition: all 100ms ease-in-out;
 }
 
 .task {
-  --high-color: #eee;
-  --high-color-3: #{rgba(#eee, 0.3)};
-
   display: flex;
   flex-flow: row nowrap;
   gap: 16px;
@@ -30,6 +28,10 @@ $width: 3px;
   }
 }
 
+.texts {
+  flex: 1 1 auto;
+}
+
 .control {
   display: flex;
   flex-flow: column;
@@ -39,17 +41,21 @@ $width: 3px;
 }
 
 .checkbox,
-.remove {
+.remove,
+.edit {
   aspect-ratio: 1;
   height: $size;
   cursor: pointer;
+  position: relative;
 }
 
 .checkbox {
+  $size: 52px;
+  flex: 0 0 auto;
+  height: $size;
   border: solid 3px;
   border-color: var(--high-color-3);
   border-radius: 5px;
-  position: relative;
   overflow: hidden;
 
   &:hover {
@@ -63,10 +69,10 @@ $width: 3px;
     width: calc(0.5 * ($size / 2));
     height: calc(0.5 * $size);
     rotate: 40deg;
-    translate: calc($size / 5);
+    translate: calc($size / 4) calc($size / 64);
     border-color: var(--high-color);
     border-style: solid;
-    border-width: 0 4px 4px 0;
+    border-width: 0 calc($size / 8) calc($size / 8) 0;
     opacity: 0;
     transition: inherit;
   }
@@ -78,7 +84,6 @@ $width: 3px;
 }
 
 .remove {
-  position: relative;
   opacity: 0.3;
 
   &:hover {
@@ -110,9 +115,21 @@ $width: 3px;
   }
 }
 
-@media (prefers-color-scheme: light) {
-  .task {
-    --high-color: #222;
-    --high-color-3: #{rgba(#222, .3)};
+.edit {
+  overflow: hidden;
+
+  &::after {
+    content: "\270E";
+    display: inline;
+    position: absolute;
+    color: var(--high-color-3);
+    inset: 0;
+    margin: auto;
+    font-size: 1.5rem;
+    line-height: 1em;
+  }
+
+  &:hover::after {
+    color: var(--high-color);
   }
 }
